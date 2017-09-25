@@ -3,6 +3,7 @@ import com.opencsv.CSVReader;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Main {
@@ -34,7 +35,8 @@ public class Main {
                         cbaris++;
                         int i;
                         if(cbaris!=1) {
-                            writer.write(prev+" ");
+//                            writer.write(prev+" ");
+                            Collections.sort(baris);
                             for (i = 0; i < baris.size() - 1; i++)
                                 writer.write(baris.get(i) + " ");
                             writer.write(baris.get(i) + "\n");
