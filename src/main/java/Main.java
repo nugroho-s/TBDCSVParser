@@ -10,13 +10,21 @@ public class Main {
     static HashMap<String,Integer> mappingMap = new HashMap<String, Integer>(300000);
     static int idnow = 0;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
+        if(args.length<3){
+            throw new Exception("must pass 3 argument, file name without space" +
+                    " row index and items index of csv");
+        }
+
+        int idxbaris = Integer.parseInt(args[1]);
+        int idxitems = Integer.parseInt(args[2]);
+
         CSVReader reader = null;
-        File file = new File("outdata/lastfm.txt");
+        File file = new File("outdata/"+args[0]+".txt");
         FileWriter writer = new FileWriter(file);
 
         try {
-            reader = new CSVReader(new FileReader("data/lastfm.csv"), ',' , '"' , 1);
+            reader = new CSVReader(new FileReader("data/"+args[0]+".csv"), ',' , '"' , 1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -31,7 +39,7 @@ public class Main {
         try {
             while ((nextLine = reader.readNext()) != null) {
                 if (nextLine != null) {
-                    if((!prev.equals(nextLine[0]))){
+                    if((!prev.equals(nextLine[idxbaris]))){
                         cbaris++;
                         int i;
                         if(cbaris!=1) {
@@ -42,9 +50,9 @@ public class Main {
                             writer.write(baris.get(i) + "\n");
                         }
                         baris.clear();
-                        prev = nextLine[0];
+                        prev = nextLine[idxbaris];
                     }
-                    idmap = getId(nextLine[1]);
+                    idmap = getId(nextLine[idxitems]);
                     baris.add(idmap);
                 }
             }
